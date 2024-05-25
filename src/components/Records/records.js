@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 
 import EditSharpIcon from "@mui/icons-material/EditSharp";
 import SaveIcon from "@mui/icons-material/Save";
+import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 
 export default function DonationRecords({ data: initialData }) {
@@ -79,6 +80,24 @@ export default function DonationRecords({ data: initialData }) {
       console.error("All fields must be populated before saving.");
     }
   };
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`http://localhost:3000/donations/${id}`)
+      .then((response) => {
+        console.log("Data deleted successfully", response.data);
+        setData((prevData) => prevData.filter((person) => person.id != id));
+        setEditableRows((prevState) => {
+          const newState = { ...prevState };
+          delete newState[id];
+          return newState;
+        });
+      })
+      .catch((error) => {
+        console.error("Error deleting data", error);
+      });
+  };
+
   return (
     <div className=" m-4 shadow-lg rounded-lg p-4 font-serif  border bg-white">
       <h1 className="font-bold tracking-wider p-2 m-2  text-blue-900 font-serif">
@@ -179,15 +198,23 @@ export default function DonationRecords({ data: initialData }) {
                   </td>
                   <td className=" m-2 p-2 border border-slate-700">
                     {isEditable ? (
-                      <SaveIcon
-                        color="primary"
-                        onClick={() => handleSave(person.id)}
-                      />
+                      <>
+                        <SaveIcon
+                          color="primary"
+                          onClick={() => handleSave(person.id)}
+                        />
+                      </>
                     ) : (
-                      <EditSharpIcon
-                        color="secondary"
-                        onClick={() => toggleEditMode(person.id)}
-                      />
+                      <>
+                        <EditSharpIcon
+                          color="secondary"
+                          onClick={() => toggleEditMode(person.id)}
+                        />
+                        <DeleteIcon
+                          color="error"
+                          onClick={() => handleDelete(person.id)}
+                        />
+                      </>
                     )}
                   </td>
                 </tr>
