@@ -53,7 +53,7 @@ export default function Form({ addNewDonation }) {
   return (
     <div className=" shadow-lg rounded-md w-fit font-serif m-2 p-1 border bg-white">
       <h3 className="font-bold tracking-wider p-1 m-1 text-blue-900 font-serif">
-        FILL DONOR DETAILS
+        Donor <span className=" text-orange-600">&</span> Donation Details Form
       </h3>
       <form
         onSubmit={handleSubmit}

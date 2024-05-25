@@ -101,7 +101,7 @@ export default function DonationRecords({ data: initialData }) {
   return (
     <div className=" m-4 shadow-lg rounded-lg p-4 font-serif  border bg-white">
       <h1 className="font-bold tracking-wider p-2 m-2  text-blue-900 font-serif">
-        DONOR LIST
+        DONOR DATA
       </h1>
       <div>
         <table className=" p-2  border-collapse border border-slate-200 text-sm">
