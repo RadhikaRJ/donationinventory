@@ -51,31 +51,28 @@ export default function Form({ addNewDonation }) {
   };
 
   return (
-    <div className=" shadow-lg rounded-md w-fit font-serif m-2 p-1 border bg-white">
-      <h3 className="font-bold tracking-wider p-1 m-1 text-blue-900 font-serif">
+    <div className=" shadow-lg rounded-md w-full lg:w-1/2 font-serif m-4 mt-0 p-4 border bg-white">
+      <h3 className="font-bold tracking-wider p-2 text-blue-900 text-center">
         Donor <span className=" text-orange-600">&</span> Donation Details Form
       </h3>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col m-1  rounded-md p-1 "
-      >
-        <div className="flex flex-wrap  justify-between m-1">
-          <div className="flex p-1 m-2 justify-between flex-wrap">
-            <label for="name" className="mr-2 text-sm text ">
+      <form onSubmit={handleSubmit} className="flex flex-col ">
+        <div className="flex flex-wrap  justify-between">
+          <div className="flex flex-col p-2 w-full">
+            <label for="name" className=" text-left text-sm mb-1">
               {" "}
               Name
             </label>
             <input
               type="text"
               id="name"
-              className="border ps-1 text-sm"
+              className="border p-2 text-sm rounded"
               placeholder=" Enter your full name"
               value={formData.name}
               onChange={handleChange}
             ></input>
           </div>
-          <div className="flex p-1 m-2 justify-between flex-wrap">
-            <label for="donationType" className=" mr-2 text-sm ">
+          <div className="flex flex-col p-2 w-full">
+            <label for="donationType" className="text-left text-sm mb-1 ">
               {" "}
               Type of donation
             </label>
@@ -83,48 +80,48 @@ export default function Form({ addNewDonation }) {
             <input
               type="text"
               id="donationType"
-              className=" border ps-1 text-sm"
+              className="border p-2 text-sm rounded"
               placeholder=" (food, clothes, etc)"
               onChange={handleChange}
               value={formData.donationType}
             ></input>
           </div>
-          <div className="flex p-1 m-2 justify-between flex-wrap">
-            <label for="quantity" className="mr-2 text-sm">
+          <div className="flex flex-col p-2 w-full">
+            <label for="quantity" className=" text-left text-sm mb-1">
               {" "}
               Quantity
             </label>
             <input
               type="number"
               id="quantity"
-              className="border ps-1 text-sm"
+              className="border p-2 text-sm rounded"
               placeholder="Enter the quantity"
               onChange={handleChange}
               value={formData.quantity}
             ></input>
           </div>
-          <div className="flex p-1 m-2 justify-between flex-wrap">
-            <label for="amount" className="  mr-2   text-sm">
+          <div className="flex flex-col p-2 w-full">
+            <label for="amount" className=" text-left text-sm mb-1">
               {" "}
               Amount
             </label>
             <input
               type="number"
               id="amount"
-              className="border ps-1 text-sm"
-              placeholder="Enter Amount S"
+              className="border p-2 text-sm rounded"
+              placeholder="$"
               onChange={handleChange}
               value={formData.amount}
-            ></input>
+            />
           </div>
-          <div className="flex p-1 m-2 justify-between flex-wrap">
-            <label for="dt" className="mr-2 text-left text-sm">
+          <div className="flex flex-col p-2 w-full">
+            <label for="dt" className=" text-left text-sm mb-1">
               Date
             </label>
             <input
               id="date"
               type="date"
-              className=" border ps-1 text-sm"
+              className=" border p-2 text-sm rounded"
               onChange={handleChange}
               value={formData.date}
             ></input>
@@ -134,7 +131,7 @@ export default function Form({ addNewDonation }) {
         <div className="flex justify-center mt-2">
           <button
             type="submit"
-            className="border rounded-md text-sm p-2 shadow-lg border-orange-400 bg-orange-400 text-white"
+            className="mt-4 border rounded-md text-sm p-2 shadow-lg border-orange-400 bg-orange-400 text-white self-center"
           >
             SUBMIT
           </button>

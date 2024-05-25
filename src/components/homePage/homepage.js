@@ -28,10 +28,12 @@ export default function HomePage() {
     <div className="bg-blue">
       <NavigationBar />
 
-      <div className="m-1 p-1 place-content-center flex flex-wrap justify-around w-full h-full ">
+      <div className="m-4 p-4 flex flex-col lg:flex-row lg:space-x-4">
         <Form addNewDonation={addNewDonation} />
         {data.length == 0 ? (
-          <p>There are no records available for display.</p>
+          <p className="mt-4 text-gray-700 lg:mt-0">
+            There are no records available for display.
+          </p>
         ) : (
           <DonationRecords data={data} />
         )}

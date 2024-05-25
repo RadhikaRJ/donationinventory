@@ -1,8 +1,8 @@
 import SideImage from "../sideImage/sideImage";
 export default function NavigationBar() {
   return (
-    <div className="flex  flex-wrap place-content-center  bg-white border shadow-md justify-evenly">
-      <h1 className="  ml-2 mt-14 text-4xl mr-20 text-blue-900 font-serif text-justify">
+    <div className="flex items-center justify-between bg-white border shadow-md p-4">
+      <h1 className="  text-4xl text-blue-900 font-serif">
         Local Shelter <span className=" text-orange-600">Donation</span>{" "}
         Inventory
       </h1>

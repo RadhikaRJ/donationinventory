@@ -99,30 +99,30 @@ export default function DonationRecords({ data: initialData }) {
   };
 
   return (
-    <div className=" m-4 shadow-lg rounded-lg p-4 font-serif  border bg-white">
-      <h1 className="font-bold tracking-wider p-2 m-2  text-blue-900 font-serif">
+    <div className=" m-4  mt-0 shadow-lg rounded-lg p-4 font-serif border bg-white w-full lg:w-1/2">
+      <h1 className="font-bold tracking-wider p-2 text-blue-900 text-center">
         DONOR DATA
       </h1>
-      <div>
-        <table className=" p-2  border-collapse border border-slate-200 text-sm">
+      <div className="max-h-96 overflow-y-auto ">
+        <table className="w-full border-collapse border border-slate-200 text-sm">
           <thead>
             <tr className="tracking-wider ">
-              <th className="font-thin m-2 p-2  border border-blue-700  bg-blue-500 text-white">
+              <th className="font-thin p-2 border border-blue-700 bg-blue-500 text-white">
                 Name
               </th>
-              <th className="font-thin m-2 p-2 border border-blue-700  bg-blue-500 text-white">
+              <th className="font-thin p-2 border border-blue-700 bg-blue-500 text-white">
                 Type of donation
               </th>
-              <th className="font-thin m-2 p-2 border border-blue-700  bg-blue-500 text-white">
+              <th className="font-thin p-2 border border-blue-700 bg-blue-500 text-white">
                 Quantity
               </th>
-              <th className="font-thin m-2 p-2 border border-blue-700  bg-blue-500 text-white">
+              <th className="font-thin p-2 border border-blue-700 bg-blue-500 text-white">
                 Amount
               </th>
-              <th className="font-thin m-2 p-2 border border-blue-700  bg-blue-500 text-white">
+              <th className="font-thin p-2 border border-blue-700 bg-blue-500 text-white">
                 Date
               </th>
-              <th className="font-thin m-2 p-2 border border-blue-700  bg-blue-500 text-white"></th>
+              <th className="font-thin p-2 border border-blue-700 bg-blue-500 text-white"></th>
             </tr>
           </thead>
           <tbody>
@@ -130,7 +130,7 @@ export default function DonationRecords({ data: initialData }) {
               const { isEditable } = editableRows[person.id] || {};
               return (
                 <tr key={person.id}>
-                  <td className="  m-2 p-2 border border-slate-700">
+                  <td className=" p-2 border border-slate-700">
                     {isEditable ? (
                       <input
                         type="text"
@@ -143,7 +143,7 @@ export default function DonationRecords({ data: initialData }) {
                       person.name
                     )}
                   </td>
-                  <td className=" m-2 p-2 border border-slate-700">
+                  <td className=" p-2 border border-slate-700">
                     {isEditable ? (
                       <input
                         type="text"
@@ -156,7 +156,7 @@ export default function DonationRecords({ data: initialData }) {
                       person.donationType
                     )}
                   </td>
-                  <td className=" m-2 p-2 border border-slate-700">
+                  <td className="p-2 border border-slate-700">
                     {isEditable ? (
                       <input
                         type="number"
@@ -169,7 +169,7 @@ export default function DonationRecords({ data: initialData }) {
                       person.quantity
                     )}
                   </td>
-                  <td className=" m-2 p-2 border border-slate-700">
+                  <td className="p-2 border border-slate-700">
                     {"$"}
                     {isEditable ? (
                       <input
@@ -183,7 +183,7 @@ export default function DonationRecords({ data: initialData }) {
                       person.amount
                     )}
                   </td>
-                  <td className=" m-2 p-2 border border-slate-700">
+                  <td className=" p-2 border border-slate-700">
                     {isEditable ? (
                       <input
                         type="date"
@@ -196,7 +196,7 @@ export default function DonationRecords({ data: initialData }) {
                       person.date
                     )}
                   </td>
-                  <td className=" m-2 p-2 border border-slate-700">
+                  <td className=" p-2 border border-slate-700">
                     {isEditable ? (
                       <>
                         <SaveIcon
@@ -210,6 +210,7 @@ export default function DonationRecords({ data: initialData }) {
                           color="secondary"
                           onClick={() => toggleEditMode(person.id)}
                         />
+
                         <DeleteIcon
                           color="error"
                           onClick={() => handleDelete(person.id)}
