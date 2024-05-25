@@ -21,6 +21,53 @@ export default function Form({ addNewDonation }) {
     date: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    donationType: "",
+    quantity: "",
+    amount: "",
+    date: "",
+  });
+
+  const validate = () => {
+    let valid = true;
+    const newErrors = {
+      name: "",
+      donationType: "",
+      quantity: "",
+      amount: "",
+      date: "",
+    };
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+      valid = false;
+    }
+
+    if (!formData.donationType.trim()) {
+      newErrors.donationType = "Donation type is required";
+      valid = false;
+    }
+
+    if (!formData.quantity || formData.quantity < 0) {
+      newErrors.quantity = "Quantity must be a positive number";
+      valid = false;
+    }
+
+    if (!formData.amount || formData.amount < 0) {
+      newErrors.amount = "Amount must be a positive number";
+      valid = false;
+    }
+
+    if (!formData.date) {
+      newErrors.date = "Date is required";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
@@ -31,6 +78,10 @@ export default function Form({ addNewDonation }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validate()) {
+      return;
+    }
+
     axios
       .post("http://localhost:3000/donations", formData)
       .then((response) => {
@@ -69,7 +120,10 @@ export default function Form({ addNewDonation }) {
               placeholder=" Enter your full name"
               value={formData.name}
               onChange={handleChange}
-            ></input>
+            />
+            {errors.name && (
+              <span className="text-red-500 text-sm">{errors.name}</span>
+            )}
           </div>
           <div className="flex flex-col p-2 w-full">
             <label for="donationType" className="text-left text-sm mb-1 ">
@@ -85,6 +139,11 @@ export default function Form({ addNewDonation }) {
               onChange={handleChange}
               value={formData.donationType}
             ></input>
+            {errors.donationType && (
+              <span className="text-red-500 text-xs">
+                {errors.donationType}
+              </span>
+            )}
           </div>
           <div className="flex flex-col p-2 w-full">
             <label for="quantity" className=" text-left text-sm mb-1">
@@ -98,7 +157,10 @@ export default function Form({ addNewDonation }) {
               placeholder="Enter the quantity"
               onChange={handleChange}
               value={formData.quantity}
-            ></input>
+            />
+            {errors.quantity && (
+              <span className="text-red-500 text-xs">{errors.quantity}</span>
+            )}
           </div>
           <div className="flex flex-col p-2 w-full">
             <label for="amount" className=" text-left text-sm mb-1">
@@ -113,6 +175,9 @@ export default function Form({ addNewDonation }) {
               onChange={handleChange}
               value={formData.amount}
             />
+            {errors.amount && (
+              <span className="text-red-500 text-xs">{errors.amount}</span>
+            )}
           </div>
           <div className="flex flex-col p-2 w-full">
             <label for="dt" className=" text-left text-sm mb-1">
@@ -125,6 +190,9 @@ export default function Form({ addNewDonation }) {
               onChange={handleChange}
               value={formData.date}
             ></input>
+            {errors.date && (
+              <span className="text-red-500 text-xs">{errors.date}</span>
+            )}
           </div>
         </div>
 
