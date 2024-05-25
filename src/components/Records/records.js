@@ -6,12 +6,79 @@
  * Include way to edit or delete a donation from the list.
  */
 
-import Icon from "@mui/material/Icon";
+import React, { useEffect, useState } from "react";
+
 import EditSharpIcon from "@mui/icons-material/EditSharp";
+import SaveIcon from "@mui/icons-material/Save";
+import axios from "axios";
 
-<Icon>star</Icon>;
+export default function DonationRecords({ data: initialData }) {
+  const [editableRows, setEditableRows] = useState({});
+  const [data, setData] = useState([]);
 
-export default function DonationRecords({ data }) {
+  useEffect(() => {
+    const initialEditableRows = {};
+    initialData.forEach((person) => {
+      initialEditableRows[person.id] = { ...person, isEditable: false };
+    });
+
+    setEditableRows(initialEditableRows);
+    setData(initialData);
+  }, [initialData]);
+
+  const toggleEditMode = (id) => {
+    setEditableRows((prevState) => ({
+      ...prevState,
+      [id]: {
+        ...prevState[id],
+        isEditable: !prevState[id].isEditable,
+      },
+    }));
+  };
+
+  const handleInputChange = (e, id, field) => {
+    const { value } = e.target;
+    setEditableRows((prevData) => ({
+      ...prevData,
+      [id]: { ...prevData[id], [field]: value },
+    }));
+  };
+
+  const handleSave = (id) => {
+    //send updated row data to backend data using axios
+    const updatedRow = editableRows[id];
+    if (
+      updatedRow.name &&
+      updatedRow.donationType &&
+      updatedRow.quantity &&
+      updatedRow.amount &&
+      updatedRow.date
+    ) {
+      axios
+        .put(`http://localhost:3000/donations/${id}`, updatedRow)
+        .then((response) => {
+          console.log("Data updated sucessfully", response.data);
+          setEditableRows((prevState) => ({
+            ...prevState,
+            [id]: {
+              ...prevState[id],
+              ...response.data,
+              isEditable: false,
+            },
+          }));
+          setData((prevData) =>
+            prevData.map((person) =>
+              person.id === id ? { ...response.data } : person
+            )
+          );
+        })
+        .catch((error) => {
+          console.error("Error updating data", error);
+        });
+    } else {
+      console.error("All fields must be populated before saving.");
+    }
+  };
   return (
     <div className=" m-4 shadow-lg rounded-lg p-4 font-serif  border bg-white">
       <h1 className="font-bold tracking-wider p-2 m-2  text-blue-900 font-serif">
@@ -39,33 +106,94 @@ export default function DonationRecords({ data }) {
               <th className="font-thin m-2 p-2 border border-blue-700  bg-blue-500 text-white"></th>
             </tr>
           </thead>
-          {data.map((person) => {
-            return (
-              <tbody>
-                <tr>
+          <tbody>
+            {data.map((person) => {
+              const { isEditable } = editableRows[person.id] || {};
+              return (
+                <tr key={person.id}>
                   <td className="  m-2 p-2 border border-slate-700">
-                    {person.name}
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={editableRows[person.id]?.name || ""}
+                        onChange={(e) =>
+                          handleInputChange(e, person.id, "name")
+                        }
+                      />
+                    ) : (
+                      person.name
+                    )}
                   </td>
                   <td className=" m-2 p-2 border border-slate-700">
-                    {person.donationType}
+                    {isEditable ? (
+                      <input
+                        type="text"
+                        value={editableRows[person.id]?.donationType || ""}
+                        onChange={(e) =>
+                          handleInputChange(e, person.id, "donationType")
+                        }
+                      />
+                    ) : (
+                      person.donationType
+                    )}
                   </td>
                   <td className=" m-2 p-2 border border-slate-700">
-                    {person.quantity}
+                    {isEditable ? (
+                      <input
+                        type="number"
+                        value={editableRows[person.id]?.quantity || ""}
+                        onChange={(e) =>
+                          handleInputChange(e, person.id, "quantity")
+                        }
+                      />
+                    ) : (
+                      person.quantity
+                    )}
                   </td>
                   <td className=" m-2 p-2 border border-slate-700">
                     {"$"}
-                    {person.amount}
+                    {isEditable ? (
+                      <input
+                        type="number"
+                        value={editableRows[person.id]?.amount || ""}
+                        onChange={(e) =>
+                          handleInputChange(e, person.id, "amount")
+                        }
+                      />
+                    ) : (
+                      person.amount
+                    )}
                   </td>
                   <td className=" m-2 p-2 border border-slate-700">
-                    {person.date}
+                    {isEditable ? (
+                      <input
+                        type="date"
+                        value={editableRows[person.id]?.date || ""}
+                        onChange={(e) =>
+                          handleInputChange(e, person.id, "date")
+                        }
+                      />
+                    ) : (
+                      person.date
+                    )}
                   </td>
                   <td className=" m-2 p-2 border border-slate-700">
-                    <EditSharpIcon color="secondary" />
+                    {isEditable ? (
+                      <SaveIcon
+                        color="primary"
+                        onClick={() => handleSave(person.id)}
+                      />
+                    ) : (
+                      <EditSharpIcon
+                        color="secondary"
+                        onClick={() => toggleEditMode(person.id)}
+                      />
+                    )}
                   </td>
                 </tr>
-              </tbody>
-            );
-          })}
+              );
+            })}
+          </tbody>
         </table>
       </div>
     </div>
